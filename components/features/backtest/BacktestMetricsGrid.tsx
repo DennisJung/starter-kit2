@@ -11,7 +11,7 @@ export function BacktestMetricsGrid({ metrics, isLoading }: BacktestMetricsGridP
   const returnTrend = totalReturn >= 0 ? "up" : "down";
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
       <MetricCard
         title="총 수익률"
         value={metrics ? `${totalReturn >= 0 ? "+" : ""}${totalReturn.toFixed(2)}%` : "-"}
@@ -19,10 +19,24 @@ export function BacktestMetricsGrid({ metrics, isLoading }: BacktestMetricsGridP
         isLoading={isLoading}
       />
       <MetricCard
+        title="CAGR"
+        value={metrics ? `${metrics.cagr >= 0 ? "+" : ""}${(metrics.cagr * 100).toFixed(2)}%` : "-"}
+        subValue={metrics ? "연평균 성장률" : undefined}
+        trend={metrics ? (metrics.cagr >= 0 ? "up" : "down") : undefined}
+        isLoading={isLoading}
+      />
+      <MetricCard
         title="샤프지수"
         value={metrics ? metrics.sharpe_ratio.toFixed(2) : "-"}
         subValue={metrics ? (metrics.sharpe_ratio >= 1 ? "우수" : "보통") : undefined}
         trend={metrics ? (metrics.sharpe_ratio >= 1 ? "up" : "neutral") : undefined}
+        isLoading={isLoading}
+      />
+      <MetricCard
+        title="소르티노 지수"
+        value={metrics ? metrics.sortino_ratio.toFixed(2) : "-"}
+        subValue={metrics ? (metrics.sortino_ratio >= 1 ? "우수" : "보통") : undefined}
+        trend={metrics ? (metrics.sortino_ratio >= 1 ? "up" : "neutral") : undefined}
         isLoading={isLoading}
       />
       <MetricCard

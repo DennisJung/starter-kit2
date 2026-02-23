@@ -41,6 +41,8 @@ class BacktestMetrics(BaseModel):
     max_drawdown: float     # 음수 (예: -0.082 = -8.2%)
     win_rate: float         # 소수 (예: 0.6 = 60%)
     trade_count: int
+    cagr: float             # 연평균 성장률 (소수, 예: 0.12 = 12%)
+    sortino_ratio: float    # 소르티노 지수 (하방 리스크 기준)
 
 
 class BacktestResponse(BaseModel):
@@ -185,12 +187,27 @@ def run_sma_backtest(req: BacktestRequest):
     winning = [t for t in trades if t["return"] > 0]
     win_rate = len(winning) / len(trades) if trades else 0.0
 
+    # CAGR (연평균 성장률)
+    trading_days = len(daily_returns)
+    years = trading_days / 252
+    cagr = (final_value / INITIAL_CAPITAL) ** (1 / years) - 1 if years > 0 else 0.0
+
+    # 소르티노 지수 (하방 편차만 사용, 무위험 수익률 0 가정)
+    downside_returns = daily_returns[daily_returns < 0]
+    if len(downside_returns) > 1:
+        downside_std = float(downside_returns.std() * np.sqrt(252))
+        sortino = float(daily_returns.mean() * 252) / downside_std if downside_std > 0 else 0.0
+    else:
+        sortino = 0.0  # 손실 거래 없음
+
     metrics = BacktestMetrics(
         total_return=round(total_return, 4),
         sharpe_ratio=round(sharpe, 4),
         max_drawdown=round(max_drawdown, 4),
         win_rate=round(win_rate, 4),
         trade_count=len(trades),
+        cagr=round(cagr, 4),
+        sortino_ratio=round(sortino, 4),
     )
 
     return BacktestResponse(

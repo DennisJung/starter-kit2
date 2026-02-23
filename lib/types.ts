@@ -62,6 +62,8 @@ export interface BacktestMetrics {
   max_drawdown: number;   // 음수 (예: -0.082 = -8.2%)
   win_rate: number;       // 소수 (예: 0.6 = 60%)
   trade_count: number;
+  cagr: number;           // 연평균 성장률 소수 (예: 0.12 = 12%)
+  sortino_ratio: number;  // 소르티노 지수
 }
 
 /** 백테스트 결과 전체 */
