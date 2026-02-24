@@ -40,19 +40,19 @@ export const PAGE_SIZE = 20
 export const NOTION_PROPERTIES = {
   /** 견적서 데이터베이스 프로퍼티 */
   ESTIMATES: {
-    TITLE: 'title',
-    CLIENT_NAME: 'client_name',
-    CLIENT_EMAIL: 'client_email',
-    ISSUE_DATE: 'issue_date',
-    VALID_UNTIL: 'valid_until',
-    STATUS: 'status',
-    NOTE: 'note',
+    TITLE: '견적서 번호',
+    CLIENT_NAME: '클라이언트명',
+    CLIENT_EMAIL: '이메일',
+    ISSUE_DATE: '발행일',
+    VALID_UNTIL: '유효기간',
+    STATUS: '상태',
+    NOTE: '비고/메모',
   },
   /** 견적 항목 데이터베이스 프로퍼티 */
   ITEMS: {
-    ITEM_NAME: 'item_name',
-    QUANTITY: 'quantity',
-    UNIT_PRICE: 'unit_price',
-    ESTIMATE_ID: 'estimate_id',
+    ITEM_NAME: '항목명',
+    QUANTITY: '수량',
+    UNIT_PRICE: '단가(원)',
+    ESTIMATE_ID: '견적서',
   },
 } as const
