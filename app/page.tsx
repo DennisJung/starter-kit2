@@ -1,5 +1,6 @@
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation'
 
 export default function Home() {
-  redirect("/demo");
+  // 루트 접근 시 대시보드로 리다이렉트
+  redirect('/dashboard')
 }

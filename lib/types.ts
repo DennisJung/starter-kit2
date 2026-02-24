@@ -1,77 +1,61 @@
-// ─── 공유 타입 정의 ────────────────────────────────────────────────────────────
+// ─── 견적서 도메인 타입 정의 ─────────────────────────────────────────────────
 
-/** 지원하는 종목 티커 */
-export type Ticker = "AAPL" | "QQQ" | "SPY" | "SCHD";
+/** 견적서 상태 */
+export type QuoteStatus = 'draft' | 'sent' | 'accepted' | 'rejected' | 'expired'
 
-/** OHLCV 데이터 (TradingView Lightweight Charts 호환 형식) */
-export interface OHLCVData {
-  time: string;   // "YYYY-MM-DD"
-  open: number;
-  high: number;
-  low: number;
-  close: number;
-  volume: number;
+/** 견적 항목 */
+export interface QuoteItem {
+  id: string
+  estimateId: string        // 견적서 ID (Relation)
+  itemName: string          // 항목명
+  quantity: number          // 수량
+  unitPrice: number         // 단가 (원)
 }
 
-/** 날짜 범위 */
-export interface DateRange {
-  from: string;   // "YYYY-MM-DD"
-  to: string;     // "YYYY-MM-DD"
+/** 견적서 */
+export interface Quote {
+  id: string
+  title: string             // 견적서 제목
+  clientName: string        // 클라이언트명
+  clientEmail?: string      // 클라이언트 이메일
+  issueDate: string         // 발행일 (YYYY-MM-DD)
+  validUntil?: string       // 유효기한 (YYYY-MM-DD)
+  status: QuoteStatus       // 견적서 상태
+  note?: string             // 비고
+  items: QuoteItem[]        // 견적 항목 목록
 }
 
-/** 종목 현재가 지표 */
-export interface StockMetrics {
-  price: number;
-  change: number;           // 전일 대비 변동 금액
-  changePercent: number;    // 전일 대비 변동률 (소수, 예: 0.0342)
-  volume: number;
-  week52High?: number;
-  week52Low?: number;
+/** 견적서 목록 항목 (목록 조회용 요약 정보) */
+export interface QuoteSummary {
+  id: string
+  title: string
+  clientName: string
+  clientEmail?: string
+  issueDate: string
+  validUntil?: string
+  status: QuoteStatus
+  totalAmount: number       // 합계 금액 (원)
 }
 
-/** 차트 기간 선택 옵션 */
-export type ChartPeriod = "1W" | "2W" | "1M" | "3M";
+/** 발행자(회사) 정보 */
+export interface IssuerInfo {
+  companyName: string       // 회사명
+  representative: string    // 대표자명
+  businessNumber: string    // 사업자등록번호
+  address: string           // 주소
+  contact: string           // 연락처
+}
 
-/** 네비게이션 항목 (Sidebar 데이터 주입용) */
+/** 견적서 공유 링크 정보 */
+export interface ShareLink {
+  quoteId: string
+  url: string
+}
+
+/** 네비게이션 항목 */
 export interface NavItem {
-  label: string;
-  href: string;
-  icon?: React.ComponentType<{ className?: string }>;
-  badge?: string;
+  label: string
+  href: string
+  icon?: React.ComponentType<{ className?: string }>
+  badge?: string
 }
-
-// ─── 백테스트 타입 ────────────────────────────────────────────────────────────
-
-/** 매매 신호 (골든크로스/데드크로스) */
-export interface BacktestSignal {
-  date: string;           // "YYYY-MM-DD"
-  type: "buy" | "sell";
-  price: number;
-}
-
-/** 수익률 곡선 데이터 포인트 (초기 자본 대비 %) */
-export interface EquityPoint {
-  time: string;           // "YYYY-MM-DD"
-  value: number;          // 100 기준 (예: 112.5 = +12.5%)
-}
-
-/** 백테스트 성과 지표 */
-export interface BacktestMetrics {
-  total_return: number;   // 소수 (예: 0.1234 = 12.34%)
-  sharpe_ratio: number;
-  max_drawdown: number;   // 음수 (예: -0.082 = -8.2%)
-  win_rate: number;       // 소수 (예: 0.6 = 60%)
-  trade_count: number;
-  cagr: number;           // 연평균 성장률 소수 (예: 0.12 = 12%)
-  sortino_ratio: number;  // 소르티노 지수
-}
-
-/** 백테스트 결과 전체 */
-export interface BacktestResult {
-  signals: BacktestSignal[];
-  equity_curve: EquityPoint[];
-  metrics: BacktestMetrics;
-}
-
-/** 백테스트 기간 옵션 */
-export type BacktestPeriod = "6M" | "1Y" | "2Y" | "5Y";

@@ -1,45 +1,35 @@
-import type { Ticker, ChartPeriod, BacktestPeriod } from "./types";
+import type { QuoteStatus } from './types'
 
-/** 지원 종목 목록 */
-export const TICKERS: { value: Ticker; label: string; description: string }[] = [
-  { value: "AAPL", label: "AAPL", description: "Apple Inc." },
-  { value: "QQQ", label: "QQQ", description: "나스닥 100 ETF" },
-  { value: "SPY", label: "SPY", description: "S&P 500 ETF" },
-  { value: "SCHD", label: "SCHD", description: "Schwab Dividend ETF" },
-];
+// ─── 견적서 상태 레이블 ───────────────────────────────────────────────────────
 
-/** 차트 기간 옵션 */
-export const CHART_PERIODS: { value: ChartPeriod; label: string; days: number }[] = [
-  { value: "1W", label: "1W", days: 7 },
-  { value: "2W", label: "2W", days: 14 },
-  { value: "1M", label: "1M", days: 30 },
-  { value: "3M", label: "3M", days: 90 },
-];
+/** 견적서 상태별 한국어 레이블 */
+export const QUOTE_STATUS_LABELS: Record<QuoteStatus, string> = {
+  draft: '초안',
+  sent: '발송됨',
+  accepted: '수락됨',
+  rejected: '거절됨',
+  expired: '만료됨',
+}
 
-/** 기본 차트 기간 */
-export const DEFAULT_PERIOD: ChartPeriod = "2W";
+/** 견적서 상태별 배지 색상 (shadcn Badge variant 매핑) */
+export const QUOTE_STATUS_VARIANTS: Record<QuoteStatus, 'default' | 'secondary' | 'destructive' | 'outline'> = {
+  draft: 'outline',
+  sent: 'secondary',
+  accepted: 'default',
+  rejected: 'destructive',
+  expired: 'outline',
+}
 
-/** Yahoo Finance API 기본 URL */
-export const YF_BASE_URL = "https://query1.finance.yahoo.com/v8/finance/chart";
+// ─── API 경로 ────────────────────────────────────────────────────────────────
 
-// ─── 백테스트 상수 ────────────────────────────────────────────────────────────
+/** Notion API 관련 엔드포인트 */
+export const API_ROUTES = {
+  quotes: '/api/quotes',
+  quoteById: (id: string) => `/api/quotes/${id}`,
+  sync: '/api/sync',
+} as const
 
-/** SMA 단기 기간 (고정) */
-export const SMA_SHORT = 20;
+// ─── 페이지네이션 ─────────────────────────────────────────────────────────────
 
-/** SMA 장기 기간 (고정) */
-export const SMA_LONG = 60;
-
-/** 백테스트 기간 옵션 */
-export const BACKTEST_PERIODS: { value: BacktestPeriod; label: string; days: number }[] = [
-  { value: "6M", label: "6개월", days: 180 },
-  { value: "1Y", label: "1년",   days: 365 },
-  { value: "2Y", label: "2년",   days: 730 },
-  { value: "5Y", label: "5년",   days: 1825 },
-];
-
-/** 기본 백테스트 기간 */
-export const DEFAULT_BACKTEST_PERIOD: BacktestPeriod = "1Y";
-
-/** FastAPI 백엔드 URL (환경변수 우선, 로컬 개발 폴백) */
-export const FASTAPI_BASE_URL = process.env.FASTAPI_BASE_URL ?? "http://localhost:8000";
+/** 대시보드 목록 페이지당 항목 수 */
+export const PAGE_SIZE = 20
