@@ -103,3 +103,10 @@ interface QuoteItem {
 ## 커뮤니케이션
 - 코드 변경 시 무엇을 왜 바꿨는지 간단히 설명
 - 파일을 새로 만들 때는 먼저 계획을 말해주고 진행
+
+## ✅ 작업 완료 체크리스트
+
+```bash
+npm run check-all   # 모든 검사 통과 확인
+npm run build       # 빌드 성공 확인
+```
