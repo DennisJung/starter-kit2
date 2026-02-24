@@ -236,8 +236,8 @@ model: sonnet
 
 ### 🎨 프론트엔드 프레임워크
 
-- **Next.js 15** (App Router) - React 풀스택 프레임워크
-- **TypeScript 5.6+** - 타입 안전성 보장
+- **Next.js 16** (App Router) - React 풀스택 프레임워크
+- **TypeScript 5** - 타입 안전성 보장
 - **React 19** - UI 라이브러리 (최신 동시성 기능)
 
 ### 🎨 스타일링 & UI
