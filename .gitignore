@@ -27,6 +27,16 @@
 # 개발 도구 자동 생성 파일
 .playwright-mcp/
 
+# MCP 설정 (로컬 절대 경로 포함, 머신 종속)
+.mcp.json
+
+# shrimp task manager 로컬 데이터
+shrimp_data/
+shrimp-rules.md
+
+# 샘플/테스트 데이터 (민감 정보 포함 가능)
+db_sample/
+
 # Python 백엔드
 backend/.venv/
 backend/__pycache__/
