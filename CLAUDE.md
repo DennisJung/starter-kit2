@@ -2,7 +2,7 @@
 
 **Notion 견적서 웹 뷰어**는 노션으로 관리하는 견적서를 클라이언트가 전문적인 웹 페이지에서 확인하고 PDF로 다운로드할 수 있게 하는 서비스입니다.
 
-상세 프로젝트 요구사항은 @/docs/PRD.md 참조
+상세 프로젝트 요구사항은 @docs/PRD.md 참조, 개발 로드맵은 @docs/ROADMAP.md 참조
 
 > 코드 스타일 규칙은 @.claude/rules/code-style.md, Git 규칙은 @.claude/rules/git-rules.md 를 참조하세요.
 
